@@ -14,6 +14,7 @@ class TextBox(FormBase):
         self.font = get_font(self.font_name)
 
         self.value = self.get_optional_arguement("text", "", list)      # type: list
+        self.numeric = bool(self.get_optional_arguement("numeric", False, int))     # type: list
         self.padding = 5
 
         self.text = None
@@ -36,7 +37,12 @@ class TextBox(FormBase):
                     del self.value[-1]
             elif key > 31:
                 # printable charcters only please :)
-                self.value.append(unicode)
+                if self.numeric:
+                    if unicode.isdigit():
+                        self.value.append(unicode)
+                else:
+                    self.value.append(unicode)
+
             self.update_text()
 
     @property

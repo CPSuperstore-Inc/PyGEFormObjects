@@ -13,3 +13,6 @@ class FormBase(ObjectBase):
 
     def onnotclick(self, button, pos):
         self.focus = False
+
+    def get_size(self):
+        return self.w, self.h

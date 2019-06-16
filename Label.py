@@ -1,5 +1,4 @@
 from SideScroller.Globals.Cache import get_font
-from SideScroller.utils import convert_color
 
 import pygame
 
