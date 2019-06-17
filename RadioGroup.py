@@ -1,4 +1,5 @@
 import pygame
+from xmltodict import OrderedDict
 
 from PyGEFormObjects.FormBase import FormBase
 from PyGEFormObjects.RadioButton import RadioButton
@@ -12,16 +13,18 @@ class RadioGroup(FormBase):
         self.font_name = self.get_mandatory_arguement("font", str)
         self.padding = 5
 
-        y = self.y
-        h = False
-        for b in args["RadioButton"]:
-            arg = {}
-            arg.update(args)
-            arg.update(b)
-            arg["@y"] = y
-            rad = RadioButton(self.screen, arg, parent)
-            self.buttons.append(rad)
-            y += rad.h + self.padding
+        if "RadioButton" in args:
+            y = self.y
+            if type(args["RadioButton"]) is OrderedDict:
+                args["RadioButton"] = [args["RadioButton"]]
+            for b in args["RadioButton"]:
+                arg = {}
+                arg.update(args)
+                arg.update(b)
+                arg["@y"] = y
+                rad = RadioButton(self.screen, arg, parent)
+                self.buttons.append(rad)
+                y += rad.h + self.padding
 
     def draw(self):
         for rad in self.buttons:        # type: RadioButton
