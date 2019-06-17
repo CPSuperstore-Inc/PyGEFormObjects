@@ -7,7 +7,7 @@ from PyGEFormObjects.FormBase import FormBase
 from PyGEFormObjects.Label import Label
 
 
-class CheckBox(FormBase):
+class RadioButton(FormBase):
     def __init__(self, screen:pygame.Surface, args: dict, parent):
         FormBase.__init__(self, screen, args, parent)
         self.label = Label(screen, args, parent)
@@ -24,13 +24,15 @@ class CheckBox(FormBase):
 
         self.w, self.h = self.label.get_size()
 
+        self.radius = int(self.h / 2)
+
         self.outline = pygame.Rect(self.x, self.y, self.label.h, self.label.h)
         self.internal = pygame.Rect(self.x + self.fill_padding, self.y + self.fill_padding, self.label.h - (self.fill_padding * 2), self.label.h - (self.fill_padding * 2))
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.outline_color, self.outline, 1)
+        pygame.draw.circle(self.screen, self.outline_color, (self.x + self.radius, self.y + self.radius), self.radius, 1)
         if self.checked:
-            pygame.draw.rect(self.screen, self.inside_color, self.internal, 0)
+            pygame.draw.circle(self.screen, self.inside_color, (self.x + self.radius, self.y + self.radius), self.radius - self.padding)
         self.label.draw()
 
     def onclick(self, button, pos):
